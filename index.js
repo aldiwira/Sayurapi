@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
 require("dotenv").config();
+const { UserRoutes } = require("./routes");
 
 const app = express();
 const port = process.env.PORT || 2000;
@@ -17,6 +18,22 @@ app.get("/", async (req, res) => {
     App: "Sayur App Backend",
     Version: "0.0.0",
     Massage: "Not Seriously project but worth it",
+  });
+});
+
+app.use("/auth", UserRoutes);
+
+//error handling
+app.use((error, req, res, next) => {
+  if (error.status) {
+    res.status(error.status);
+  } else {
+    res.status(500);
+  }
+  res.json({
+    code: error.status ? error.status : 500,
+    message: error.message,
+    data: false,
   });
 });
 
