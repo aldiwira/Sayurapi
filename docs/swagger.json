@@ -1,0 +1,164 @@
+{
+  "swagger": "3.0",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Sayur App API",
+    "description": "Yah ini deskripsi biar keren",
+    "version": "1.0.0",
+    "contact": {
+      "email": "doyankarya@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "schemes":[
+    "https",
+    "http"
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Login dan register"
+    },
+    {
+      "name": "Produk",
+      "description": "Barang barang produk"
+    }
+  ],
+  "servers" : [
+      {
+          "url": "http://localhost:2000",
+          "description" :"Development Server"
+      }
+  ],
+  "components": {
+      "securitySchemes": {
+          "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+      }
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Untuk melakukan login dan mendapatkan key",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Untuk melakukan login dan mendapatkan key",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Register"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/product" :{
+        "get" : {
+            "tags": [
+                "Produk"
+            ],
+            "description": "Untuk mengambil semua data barang",
+            "responses": {
+                "200": {
+                    "description": "Ok"
+                }
+            },
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    },
+    "/product/{id_barang}" : {
+        "get" : {
+            "tags": [
+                "Produk"
+            ],
+            "description": "Untuk mengambil data barang sesuai dengan id",
+            "responses": {
+                "200": {
+                    "description": "Ok"
+                }
+            },
+              "parameters": [
+                {
+                    "name": "id_barang",
+                    "in": "path",
+                    "description": "ID barang",
+                    "required": true
+                }
+            ],
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+            ]
+        }
+    }
+  },
+  "definitions": {
+    "Login": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Register": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
