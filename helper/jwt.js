@@ -29,7 +29,7 @@ module.exports = {
           }
         });
       } else {
-        throw new Error("Invalid Signature");
+        throw new Error("Invalid Signature, Check your token key");
       }
     } catch (error) {
       next(error);

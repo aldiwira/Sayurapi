@@ -7,4 +7,9 @@ const getCollection = (name) => {
   return db.get(name);
 };
 
-module.exports = { db, getCollection };
+const collectionName = {
+  users: "users",
+  products: "products",
+};
+
+module.exports = { db, getCollection, collectionName };
